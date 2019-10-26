@@ -1,5 +1,5 @@
 # Tasks
-- [x] Search a grammatical unix shell.
+- [x] Search a grammatical unix shell
 - [ ] Implement tokenizer code
 - [ ] Implement lexical analizer 
 - [ ] Implement syntax analizer

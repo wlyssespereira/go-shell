@@ -4,49 +4,49 @@ import (
 	"fmt"
 )
 
-type TokenType int
+type TokenType string
 
 const (
-	UNDEFINED TokenType = iota
+	UNDEFINED = "UNDEFINED"
 
-	WORD
-	ASSIGNMENT_WORD
-	NAME
-	NEWLINE
-	IO_NUMBER
+	WORD            = "WORD"
+	ASSIGNMENT_WORD = "ASSIGNMENT_WORD"
+	NAME            = "NAME"
+	NEWLINE         = "NEWLINE"
+	IO_NUMBER       = "IO_NUMBER"
 
-	AND_IF // '&&'
-	OR_IF  // '||'
-	DSEMI  // ';;'
+	AND_IF = "AND_IF" // '&&'
+	OR_IF  = "OR_IF"  // '||'
+	DSEMI  = "DSEMI"  // ';;'
 
-	DLESS     // '<<'
-	DGREAT    // '>>'
-	LESSAND   // '<&'
-	GREATAND  // '>&'
-	LESSGREAT // '<>'
-	DLESSDASH // '<<-'
+	DLESS     = "DLESS"     // '<<'
+	DGREAT    = "DGREAT"    // '>>'
+	LESSAND   = "LESSAND"   // '<&'
+	GREATAND  = "GREATAND"  // '>&'
+	LESSGREAT = "LESSGREAT" // '<>'
+	DLESSDASH = "DLESSDASH" // '<<-'
 
-	CLOBBER // '>|'
+	CLOBBER = "CLOBBER" // '>|'
 
-	IF   // if
-	THEN // then
-	ELSE // else
-	ELIF // elif
-	FI   // fi
-	DO   // do
-	DONE // done
+	IF   = "IF"   // if
+	THEN = "THEN" // then
+	ELSE = "ELSE" // else
+	ELIF = "ELIF" // elif
+	FI   = "FI"   // fi
+	DO   = "DO"   // do
+	DONE = "DONE" // done
 
-	CASE  // case
-	ESAC  // esac
-	WHILE // while
-	UNTIL // until
-	FOR   // for
+	CASE  = "CASE"  // case
+	ESAC  = "ESAC"  // esac
+	WHILE = "WHILE" // while
+	UNTIL = "UNTIL" // until
+	FOR   = "FOR"   // for
 
-	LBRACE // '{'
-	RBRACE // '}'
-	BANG   // '!'
+	LBRACE = "LBRACE" // '{'
+	RBRACE = "RBRACE" // '}'
+	BANG   = "BANG"   // '!'
 
-	IN // in
+	IN = "IN" // in
 )
 
 type Token struct {

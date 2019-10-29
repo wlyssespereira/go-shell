@@ -1,7 +1,7 @@
 package lexical
 
 import (
-	"fmt"
+	"regexp"
 )
 
 type TokenType string
@@ -55,75 +55,88 @@ type Token struct {
 }
 
 type LexicalAnalyzer struct {
-	Tokens []string
+	List   []string
+	Tokens []Token
+	Errors []Token
 }
 
-func (analyzer LexicalAnalyzer) Analyze() {
+func NewAnalyzer() *LexicalAnalyzer {
+	analyzer := new(LexicalAnalyzer)
+	return analyzer
+}
 
-	for _, token := range analyzer.Tokens {
-		x := new(Token)
-		value := token
-		x.Value = value
-		x.Type = DetermineTypeToken(value)
-		fmt.Println(x)
+func (analyzer *LexicalAnalyzer) Analyze() bool {
+	for _, text := range analyzer.List {
+		var token = new(Token)
+		token.Value = text
+		token.Type = analyzer.DetermineTypeToken(text)
+		if token.Type == UNDEFINED {
+			analyzer.Errors = append(analyzer.Errors, *token)
+		} else {
+			analyzer.Tokens = append(analyzer.Tokens, *token)
+		}
 	}
-
+	return len(analyzer.Errors) == 0
 }
 
-func DetermineTypeToken(value string) TokenType {
-	switch value {
-	case "&&":
+func (analyzer LexicalAnalyzer) DetermineTypeToken(value string) TokenType {
+	var word = regexp.MustCompile(`^\S+$`)
+
+	switch {
+	case value == "&&":
 		return AND_IF
-	case "||":
+	case value == "||":
 		return OR_IF
-	case ";;":
+	case value == ";;":
 		return DSEMI
-	case "<<":
+	case value == "<<":
 		return DLESS
-	case ">>":
+	case value == ">>":
 		return DGREAT
-	case "<&":
+	case value == "<&":
 		return LESSAND
-	case ">&":
+	case value == ">&":
 		return GREATAND
-	case "<>":
+	case value == "<>":
 		return LESSGREAT
-	case "<<-":
+	case value == "<<-":
 		return DLESSDASH
-	case ">|":
+	case value == ">|":
 		return CLOBBER
-	case "if":
+	case value == "if":
 		return IF
-	case "then":
+	case value == "then":
 		return THEN
-	case "else":
+	case value == "else":
 		return ELSE
-	case "elif":
+	case value == "elif":
 		return ELIF
-	case "fi":
+	case value == "fi":
 		return FI
-	case "do":
+	case value == "do":
 		return DO
-	case "done":
+	case value == "done":
 		return DONE
-	case "case":
+	case value == "case":
 		return CASE
-	case "esac":
+	case value == "esac":
 		return ESAC
-	case "while":
+	case value == "while":
 		return WHILE
-	case "until":
+	case value == "until":
 		return UNTIL
-	case "for":
+	case value == "for":
 		return FOR
-	case "{":
+	case value == "{":
 		return LBRACE
-	case "}":
+	case value == "}":
 		return RBRACE
-	case "!":
+	case value == "!":
 		return BANG
-	case "in":
+	case value == "in":
 		return IN
+	case word.MatchString(value):
+		return WORD
 	default:
 		return UNDEFINED
 	}

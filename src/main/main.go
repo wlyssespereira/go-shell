@@ -5,7 +5,6 @@ import (
 	"lexical"
 	"os"
 	"strings"
-	"tokenizer"
 )
 
 func main() {
@@ -13,13 +12,15 @@ func main() {
 	str := ""
 	str = "TESTE=/etc/hosts"
 	str = "TESTE >> TESTE"
-	str = "cat /etc/hosts | grep localhost | od \"teste teste\" "
+	str = "cat /etc/hosts | grep localhost | od \"teste teste\" & "
 
 	lst := strings.Fields(str)
-	lst = tokenizer.Tokenize(str)
 
-	analyzer := new(lexical.LexicalAnalyzer)
-	analyzer.Tokens = lst
+	//analyzer := new(lexical.LexicalAnalyzer)
+	analyzer := lexical.NewAnalyzer()
+	analyzer.List = lst
 	analyzer.Analyze()
+
+	fmt.Printf("%v", analyzer.Tokens)
 
 }
